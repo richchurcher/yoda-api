@@ -1,5 +1,6 @@
 import json
 import logging
+import re
 import urllib
 
 from flask import Flask, jsonify, request
@@ -19,7 +20,9 @@ def get_yodish():
 def translate(source):
     pos_tagged = fetch_pos(source.lower().strip(' .'))
     words = word_list(pos_tagged.strip('()'))
-    return words
+    yodish = apply_yodish_grammar(words)
+    sentence = assemble(yodish)
+    return sentence
 
 def fetch_pos(source):
     """ Parts of speech tagging from text-processing.com. """
@@ -43,5 +46,37 @@ def word_list(sentence):
     for i in range(0, len(words)):
         word, tag = words[i].split('/')
         words[i] = (word, tag)
-    logging.warning(words)
     return words
+
+def apply_yodish_grammar(words):
+    yodish = []
+    current = 0 
+
+    for i in range(0, len(words)):
+        tag = words[i][1]
+
+        # RULE: PRP + VBP pairings go to the end, prepended with comma
+        # Example: "You are sad." -> "Sad, you are."
+        if tag == 'PRP':
+            if words[i+1][1] == 'VBP':
+                yodish.append(',')
+                yodish.append(words[i][0])
+                yodish.append(words[i+1][0])
+        elif tag == 'VBP':
+            continue
+        else:
+            yodish.insert(current, words[i][0])
+            current += 1
+
+    return yodish
+
+def assemble(words):
+    words[0] = words[0].capitalize()
+    words[-1] += '.'
+    # Remove whitespace before punctuation
+    return re.sub(
+        r'\s+(\W)',
+        r'\1',
+        ' '.join(words)
+    )
+
