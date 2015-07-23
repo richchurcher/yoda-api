@@ -21,4 +21,5 @@ class TranslateTestCase(unittest.TestCase):
     def test_you_are_conflicted(self):
         self.assertEqual(
             "Conflicted, you are.", 
-            main.translate('You are conflicted.'))
+            main.translate("You are conflicted."))
+
