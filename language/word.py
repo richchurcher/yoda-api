@@ -1,4 +1,4 @@
 class Word(object):
-    def __init__(self, source, tag):
-        self.source = source
+    def __init__(self, text, tag):
+        self.text = text
         self.tag = tag
