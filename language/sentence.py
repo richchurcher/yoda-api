@@ -1,3 +1,5 @@
+import re
+
 class Sentence(object):
     def __init__(self):
         self.words = []
@@ -7,3 +9,15 @@ class Sentence(object):
 
     def add_end(self, word):
         self.words.append(word)
+
+    def apply_rule(self, rule):
+        rule(self.words)
+
+    def render(self):
+        s = ""
+        for i in range(0, len(self.words)):
+            s += self.words[i].text + ' '
+        s = s.capitalize() + '.'
+
+        # Remove whitespace before punctuation
+        return re.sub(r'\s+(\W)', r'\1', s)

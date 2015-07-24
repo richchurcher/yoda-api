@@ -37,6 +37,7 @@ def fetch_pos(source):
         return "Timed out, your request has. Mmmmmm. Try again later, you must."
 
     if response.status_code == 200:
+        logging.warning(response.content)
         return json.loads(response.content)['text']
 
 def word_list(sentence):
