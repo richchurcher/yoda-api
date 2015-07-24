@@ -17,7 +17,7 @@ class SentenceTestCase(unittest.TestCase):
         sut.add_end(Word('conflicted', 'VBN'))
         self.assertEqual('You are conflicted.', sut.render())
 
-    def test_apply_rule(self):
+    def test_rule_prp_vbp(self):
         sut = Sentence()
         sut.add_end(Word('you', 'PRP'))
         sut.add_end(Word('are', 'VBP'))

@@ -1,8 +1,8 @@
 import re
 
 class Sentence(object):
-    def __init__(self):
-        self.words = []
+    def __init__(self, words=[]):
+        self.words = words
 
     def add_start(self, word):
         self.words.insert(0, word)
