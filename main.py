@@ -6,7 +6,6 @@ import urllib
 from flask import Flask, jsonify, request
 from google.appengine.api import urlfetch, urlfetch_errors
 
-from language.word import Word
 from language.sentence import Sentence
 from rules.yodish import *
 
@@ -24,8 +23,7 @@ def get_yodish():
 def translate(source):
     source = source[:1].lower() + source[1:]
     pos_tagged = fetch_pos(source.strip(' .'))
-    words = word_list(pos_tagged.strip('()'))
-    s = Sentence(words)
+    s = Sentence(pos_tagged.strip('()'))
     apply_yodish_grammar(s)
     return s.render()
 
@@ -44,16 +42,4 @@ def fetch_pos(source):
     if response.status_code == 200:
         logging.warning(response.content)
         return json.loads(response.content)['text']
-
-def word_list(pos_tagged_words):
-    words = pos_tagged_words.split()
-    del(words[0])
-
-    for i in range(0, len(words)):
-        word, tag = words[i].split('/')
-        words[i] = Word(word, tag)
-    return words
-
-def apply_yodish_grammar(sentence):
-    sentence.apply_rule(rule_prp_vbp)
 

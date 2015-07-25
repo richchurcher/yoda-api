@@ -1,5 +1,9 @@
 from language.word import Word
 
+def apply_yodish_grammar(sentence):
+    sentence.apply_rule(rule_prp_vbp)
+
+
 def rule_prp_vbp(words):
     """ You are conflicted. -> Conflicted, you are. """
     for i in range(0, len(words)):
