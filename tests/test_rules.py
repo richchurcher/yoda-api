@@ -40,7 +40,7 @@ class E2eTestCase(unittest.TestCase):
         )
         apply_yodish_grammar(sut)
         self.assertEqual(
-            "Ii I I",
+            "Ii I I.",
             sut.render()
         )
 
