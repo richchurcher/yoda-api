@@ -23,6 +23,6 @@ class SentenceTestCase(unittest.TestCase):
         self.assertEqual("Conflicted, you are.", self.sut.render())
 
     def test_expand_contractions(self):
-        actual = self.sut.expand_contractions("can't won't ain't i'm you're")
-        self.assertEqual("cannot will not am not I am you are", actual)
+        actual = self.sut.expand_contractions("can't ain't i'm you're")
+        self.assertEqual("cannot am not I am you are", actual)
 

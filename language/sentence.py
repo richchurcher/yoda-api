@@ -131,7 +131,7 @@ class Sentence(object):
             self.raw = self.expand_contractions(source)
             self.raw = self.raw[:1].lower() + self.raw[1:]
             self.pos_tagged = tagger.fetch_pos(self.raw)
-            self.words = self.tokenise()
+            self.tokenise()
 
     def add_start(self, word):
         self.words.insert(0, word)
@@ -155,7 +155,7 @@ class Sentence(object):
         words = source.split()
         for i in range(0, len(words)):
             if words[i].lower() in self.contractions:
-                words[i] = self.contractions[words[i]]
+                words[i] = self.contractions[words[i].lower()]
         return ' '.join(words)
 
     def render(self):

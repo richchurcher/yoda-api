@@ -1,6 +1,5 @@
 import json
 import urllib
-import logging
 
 from google.appengine.api import urlfetch, urlfetch_errors
 
@@ -22,6 +21,5 @@ class PartOfSpeechTagger(object):
             return "Timed out, your request has. Mmmmmm. Try again later, you must."
 
         if response.status_code == 200:
-            logging.warning(response.content)
             return json.loads(response.content)['text']
 
