@@ -30,12 +30,12 @@ class Sentence(object):
         "how'd'y": "how do you",
         "how'll": "how will",
         "how's": "how is",
-        "I'd": "I would",
-        "I'd've": "I would have",
-        "I'll": "I will",
-        "I'll've": "I will have",
-        "I'm": "I am",
-        "I've": "I have",
+        "i'd": "I would",
+        "i'd've": "I would have",
+        "i'll": "I will",
+        "i'll've": "I will have",
+        "i'm": "I am",
+        "i've": "I have",
         "isn't": "is not",
         "it'd": "it would",
         "it'd've": "it would have",
@@ -154,7 +154,7 @@ class Sentence(object):
         """ Like contractions, Yoda does not. """
         words = source.split()
         for i in range(0, len(words)):
-            if words[i] in self.contractions:
+            if words[i].lower() in self.contractions:
                 words[i] = self.contractions[words[i]]
         return ' '.join(words)
 
