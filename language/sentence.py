@@ -1,4 +1,5 @@
 import re
+
 from language.word import Word
 
 class Sentence(object):
@@ -130,7 +131,7 @@ class Sentence(object):
         if source is not None and tagger is not None:
             self.raw = self.expand_contractions(source)
             self.raw = self.raw[:1].lower() + self.raw[1:]
-            self.pos_tagged = tagger.fetch_pos(self.raw)
+            self.pos_tagged = tagger.fetch_pos(self.raw.strip(' .'))
             self.tokenise()
 
     def add_start(self, word):
@@ -162,7 +163,7 @@ class Sentence(object):
         s = ""
         for i in range(0, len(self.words)):
             s += self.words[i].text + ' '
-        s = s.capitalize() + '.'
+        s = s[0].upper() + s[1:] + '.'
 
         # Remove whitespace before punctuation
         return re.sub(r'\s+(\W)', r'\1', s)

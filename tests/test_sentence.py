@@ -18,10 +18,6 @@ class SentenceTestCase(unittest.TestCase):
     def test_render_case_and_fullstop(self):
         self.assertEqual("You are conflicted.", self.sut.render())
 
-    def test_rule_prp_vbp(self):
-        self.sut.apply_rule(rule_prp_vbp)
-        self.assertEqual("Conflicted, you are.", self.sut.render())
-
     def test_expand_contractions(self):
         actual = self.sut.expand_contractions("can't ain't i'm you're")
         self.assertEqual("cannot am not I am you are", actual)

@@ -1,6 +1,4 @@
 import json
-import logging
-import re
 
 from flask import Flask, jsonify, request
 from google.appengine.api import urlfetch, urlfetch_errors
