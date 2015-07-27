@@ -5,6 +5,7 @@ def apply_yodish_grammar(sentence):
     sentence.apply_rule(rule_prp_vbp)
     sentence.apply_rule(rule_rb_jjr)
     sentence.apply_rule(rule_uppercase_i)
+    sentence.apply_rule(rule_vb_prp_nn)
 
 
 def rule_prp_vbp(words):
@@ -33,3 +34,14 @@ def rule_rb_jjr(words):
                 words.insert(0, words.pop(i))
                 words.insert(0, words.pop(i))
                 return
+
+
+def rule_vb_prp_nn(words):
+    """ Put your weapons away. -> Away put your weapons. """
+    for i in range(0, len(words)):
+        if words[i].tag == 'VB':
+            if words[i+1].tag == 'PRP':
+                if words[i+2].tag == 'NNS':
+                    for j in range(0, 2):
+                        words.append(words.pop(i))
+                    return

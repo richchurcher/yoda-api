@@ -22,3 +22,5 @@ class SentenceTestCase(unittest.TestCase):
         actual = self.sut.expand_contractions("can't ain't i'm you're")
         self.assertEqual("cannot am not I am you are", actual)
 
+    def test_has_tag_sequence(self):
+        self.assertEqual(True, self.sut.has_tag_sequence(['PRP','VBP','VBN']))
