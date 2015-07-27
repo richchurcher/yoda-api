@@ -1,3 +1,4 @@
+import random
 import re
 
 from language.word import Word
@@ -159,6 +160,11 @@ class Sentence(object):
                 words[i] = self.contractions[words[i].lower()]
         return ' '.join(words)
 
+    def random_yodaisms(self):
+        if random.random() < 0.3:
+            return " Yes."
+        return ""
+
     def render(self):
         s = ""
         for i in range(0, len(self.words)):
@@ -166,4 +172,6 @@ class Sentence(object):
         s = s[0].upper() + s[1:] + '.'
 
         # Remove whitespace before punctuation
-        return re.sub(r'\s+(\W)', r'\1', s)
+        s = re.sub(r'\s+(\W)', r'\1', s)
+
+        return s + self.random_yodaisms()

@@ -1,3 +1,4 @@
+import logging
 import unittest
 
 from google.appengine.api import urlfetch
@@ -22,7 +23,7 @@ class E2eTestCase(unittest.TestCase):
     def tearDown(self):
         self.testbed.deactivate()
 
-    def test_prp_vbp(self):
+    def test_conflicted_you_are(self):
         sut = Sentence(
             "You are conflicted.",
             self.tagger
@@ -52,6 +53,18 @@ class E2eTestCase(unittest.TestCase):
         apply_yodish_grammar(sut)
         self.assertEqual(
             "Much anger in him, I sense.",
+            sut.render()
+        )
+
+    def test_away_put_weapons(self):
+        sut = Sentence(
+            "Put your weapons away.",
+            self.tagger
+        )
+        logging.warning(sut.pos_tagged)
+        apply_yodish_grammar(sut)
+        self.assertEqual(
+            "Away put your weapons.",
             sut.render()
         )
 
