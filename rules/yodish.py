@@ -8,7 +8,7 @@ def apply_yodish_grammar(sentence):
     sentence.apply_rule(rule_vb_prp_nn)
 
 
-def get_tag_list(words):
+def get_tag_seq(words):
     return [words[i].tag for i in range(len(words))]
 
 
@@ -17,7 +17,7 @@ def move_tag_seq(words, seq, pos, punc=None):
     Prepend with punctuation if required. """
     if len(seq) > len(words):
         return
-    tags = get_tag_list(words)
+    tags = get_tag_seq(words)
     for i in range(len(tags)):
         if tags[i:i+len(seq)] == seq:
             if pos == 'start':
@@ -49,7 +49,7 @@ def rule_rb_jjr(words):
 
 def rule_vb_prp_nn(words):
     """ Put your weapons away. -> Away put your weapons. """
-    tags = get_tag_list(words)
+    tags = get_tag_seq(words)
     seq = ['VB', 'PRP$', 'NNS', 'RB']
     for i in range(len(tags)):
         if tags[i:i+len(seq)] == seq:

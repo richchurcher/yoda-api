@@ -28,4 +28,8 @@ class SentenceTestCase(unittest.TestCase):
             ['PRP','VBP'],
             'end'
         )
-        self.assertEqual(['VBN','PRP','VBP'], self.sut.get_tag_seq())
+        self.assertEqual(['VBN','PRP','VBP'], get_tag_seq(self.sut.words))
+
+    def test_plurals(self):
+        pass
+

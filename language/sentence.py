@@ -165,9 +165,6 @@ class Sentence(object):
             return " Yes."
         return ""
 
-    def get_tag_seq(self):
-        return [self.words[i].tag for i in range(len(self.words))]
-
     def render(self):
         s = ""
         for i in range(len(self.words)):
