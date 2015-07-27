@@ -145,17 +145,17 @@ class Sentence(object):
         rule(self.words)
 
     def tokenise(self):
-        self.words = self.pos_tagged.split()
+        self.words = self.pos_tagged.strip('()').split()
         del(self.words[0])
 
-        for i in range(0, len(self.words)):
+        for i in range(len(self.words)):
             word, tag = self.words[i].split('/')
             self.words[i] = Word(word, tag)
 
     def expand_contractions(self, source):
         """ Like contractions, Yoda does not. """
         words = source.split()
-        for i in range(0, len(words)):
+        for i in range(len(words)):
             if words[i].lower() in self.contractions:
                 words[i] = self.contractions[words[i].lower()]
         return ' '.join(words)
@@ -165,18 +165,12 @@ class Sentence(object):
             return " Yes."
         return ""
 
-    def has_tag_sequence(self, seq):
-        if len(seq) > len(self.words):
-            return false
-        tags = [self.words[i].tag for i in range(len(self.words))]
-        for i in range(len(tags)):
-            if tags[i:i+len(seq)] == seq:
-                return True
-        return False
+    def get_tag_seq(self):
+        return [self.words[i].tag for i in range(len(self.words))]
 
     def render(self):
         s = ""
-        for i in range(0, len(self.words)):
+        for i in range(len(self.words)):
             s += self.words[i].text + ' '
         s = s[0].upper() + s[1:] + '.'
 
