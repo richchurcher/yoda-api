@@ -12,27 +12,54 @@ def get_tag_seq(words):
     return [words[i].tag for i in range(len(words))]
 
 
-def move_tag_seq(words, seq, pos, punc=None):
-    """ If seq present (order matters), move words to start or end.
+def move_tag_seq(words, seq, dest, punc=None):
+    """ If seq present (order matters), move words to dest.
     Prepend with punctuation if required. """
     if len(seq) > len(words):
-        return
+        return None
+    seq_start = index_tag_seq(words, seq)
+    if seq_start > -1:
+        move_words = words[seq_start:seq_start+len(seq)]
+        words = words[:seq_start] + words[seq_start+len(seq):]
+        if dest == 'start':
+            words = move_words + words
+        if dest == 'end':
+            if punc is not None:
+                words.append(punc)
+            words += move_words
+        return words
+    return None
+
+
+def index_tag_seq(words, seq, strict=False):
+    """ Return index of first occurrence of seq in words. Slightly fuzzy
+    finding if strict=False, particularly with regard to tolerating 
+    plurals. """
     tags = get_tag_seq(words)
+    nouns = 'NN' in seq or 'NNS' in seq
+    alt_seq = None
+    if strict is False:
+        if nouns is True:
+            alt_seq = [
+                'NNS' if x == 'NN' else 
+                'NN' if x == 'NNS' else 
+                x for x in seq
+            ] 
+        
     for i in range(len(tags)):
-        if tags[i:i+len(seq)] == seq:
-            if pos == 'start':
-                for x in range(len(seq)):
-                    words.insert(0, words.pop(i))
-            if pos == 'end':
-                if punc is not None:
-                    words.append(punc)
-                for x in range(len(seq)):
-                    words.append(words.pop(i))
+        check_seq = tags[i:i+len(seq)]
+        if check_seq == seq:
+            return i
+        if nouns:
+            if check_seq == alt_seq:
+                return i
+
+    return -1
 
 
 def rule_prp_vbp(words):
     """ You are conflicted. -> Conflicted, you are. """
-    move_tag_seq(words, ['PRP', 'VBP'], 'end', Word(',',','))
+    return move_tag_seq(words, ['PRP', 'VBP'], 'end', Word(',',','))
 
 
 def rule_uppercase_i(words):
@@ -40,17 +67,16 @@ def rule_uppercase_i(words):
     for i in range(0, len(words)):
         if words[i].text == 'i':
             words[i].text = 'I'
+    return words
 
 
 def rule_rb_jjr(words):
     """ I sense much anger in him. -> Much anger I sense in him. """
-    move_tag_seq(words, ['RB', 'JJR'], 'start')
+    return move_tag_seq(words, ['RB', 'JJR'], 'start')
 
 
 def rule_vb_prp_nn(words):
     """ Put your weapons away. -> Away put your weapons. """
-    tags = get_tag_seq(words)
-    seq = ['VB', 'PRP$', 'NNS', 'RB']
-    for i in range(len(tags)):
-        if tags[i:i+len(seq)] == seq:
-            move_tag_seq(words, ['VB', 'PRP$', 'NNS'], 'end')
+    if index_tag_seq(words, ['VB', 'PRP$', 'NNS', 'RB']) > -1:
+        return move_tag_seq(words, ['VB', 'PRP$', 'NNS'], 'end')
+    return None

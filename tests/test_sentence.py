@@ -1,3 +1,4 @@
+import logging
 import unittest
 from language.word import Word
 from language.sentence import Sentence
@@ -23,7 +24,7 @@ class SentenceTestCase(unittest.TestCase):
         self.assertEqual("cannot am not I am you are", actual)
 
     def test_move_tag_seq(self):
-        move_tag_seq(
+        self.sut.words = move_tag_seq(
             self.sut.words,
             ['PRP','VBP'],
             'end'
@@ -31,5 +32,14 @@ class SentenceTestCase(unittest.TestCase):
         self.assertEqual(['VBN','PRP','VBP'], get_tag_seq(self.sut.words))
 
     def test_plurals(self):
-        pass
+        self.sut.add_end(Word('weapons', 'NNS'))
+        self.sut.words = move_tag_seq(
+            self.sut.words,
+            ['VBN','NN'],
+            'start'
+        )
+        self.assertEqual(
+            ['VBN','NNS','PRP','VBP'], 
+            get_tag_seq(self.sut.words)
+        )
 

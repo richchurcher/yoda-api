@@ -142,7 +142,9 @@ class Sentence(object):
         self.words.append(word)
 
     def apply_rule(self, rule):
-        rule(self.words)
+        result = rule(self.words)
+        if result is not None:
+            self.words = result
 
     def tokenise(self):
         self.words = self.pos_tagged.strip('()').split()

@@ -61,7 +61,6 @@ class E2eTestCase(unittest.TestCase):
             "Put your weapons away.",
             self.tagger
         )
-        logging.warning(sut.pos_tagged)
         apply_yodish_grammar(sut)
         self.assertEqual(
             "Away put your weapons.",
