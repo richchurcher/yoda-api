@@ -22,7 +22,12 @@ def get_yodish():
 
 def translate(source):
     t = PartOfSpeechTagger('http://text-processing.com/api/tag/', 'text')
-    sentences = t.tag(expand_contractions(source)).split('\n')
+    source = expand_contractions(source)
+    source = t.tag(source)
+    source = source.replace('\n','')
+    logging.warning("Foo: " + source)
+    sentences = source.split(')(')
+
     translated = ""
     for pos_tagged in sentences:
         s = Sentence(pos_tagged)

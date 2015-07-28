@@ -34,7 +34,7 @@ class Sentence(object):
         self.words[0].text = w[:1].lower() + w[1:]
         
     def random_yodaisms(self):
-        if random.random() < 0.3:
+        if random.random() < 0.2:
             return " Yes."
         return ""
 

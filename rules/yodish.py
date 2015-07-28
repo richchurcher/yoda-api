@@ -6,6 +6,7 @@ def apply_yodish_grammar(sentence):
     sentence.apply_rule(rule_rb_jjr)
     sentence.apply_rule(rule_uppercase_i)
     sentence.apply_rule(rule_vb_prp_nn)
+    sentence.apply_rule(rule_dt_vbz)
 
 
 def get_tag_seq(words):
@@ -81,3 +82,6 @@ def rule_vb_prp_nn(words):
         return move_tag_seq(words, ['VB', 'PRP$', 'NNS'], 'end')
     return None
 
+def rule_dt_vbz(words):
+    """ This is my home. -> My home this is. """
+    return move_tag_seq(words, ['DT', 'VBZ'], 'end')
