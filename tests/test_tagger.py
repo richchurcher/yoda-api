@@ -25,7 +25,7 @@ class TaggerTestCase(unittest.TestCase):
         )
         self.assertEqual(
             u"(S I/PRP am/VBP sorry/JJ)", 
-            sut.fetch_pos("I am sorry")
+            sut.tag("I am sorry")
         )
 
 

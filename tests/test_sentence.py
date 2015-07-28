@@ -2,6 +2,7 @@ import logging
 import unittest
 from language.word import Word
 from language.sentence import Sentence
+from language.contractions import expand_contractions
 from rules.yodish import *
 
 class SentenceTestCase(unittest.TestCase):
@@ -20,7 +21,7 @@ class SentenceTestCase(unittest.TestCase):
         self.assertEqual("You are conflicted.", self.sut.render())
 
     def test_expand_contractions(self):
-        actual = self.sut.expand_contractions("can't ain't i'm you're")
+        actual = expand_contractions("can't ain't i'm you're")
         self.assertEqual("cannot am not I am you are", actual)
 
     def test_move_tag_seq(self):

@@ -80,3 +80,4 @@ def rule_vb_prp_nn(words):
     if index_tag_seq(words, ['VB', 'PRP$', 'NNS', 'RB']) > -1:
         return move_tag_seq(words, ['VB', 'PRP$', 'NNS'], 'end')
     return None
+

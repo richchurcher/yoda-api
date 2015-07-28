@@ -1,11 +1,13 @@
 import json
+import logging
 
 from flask import Flask, jsonify, request
 from google.appengine.api import urlfetch, urlfetch_errors
 
 from language.sentence import Sentence
 from language.tagger import PartOfSpeechTagger
-from rules.yodish import *
+from language.contractions import expand_contractions
+from rules.yodish import apply_yodish_grammar
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -20,7 +22,11 @@ def get_yodish():
 
 def translate(source):
     t = PartOfSpeechTagger('http://text-processing.com/api/tag/', 'text')
-    s = Sentence(source, t)
-    apply_yodish_grammar(s)
-    return s.render()
+    sentences = t.tag(expand_contractions(source)).split('\n')
+    translated = ""
+    for pos_tagged in sentences:
+        s = Sentence(pos_tagged)
+        apply_yodish_grammar(s)
+        translated += s.render() + ' '
+    return translated.strip()
 

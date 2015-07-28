@@ -25,8 +25,7 @@ class E2eTestCase(unittest.TestCase):
 
     def test_conflicted_you_are(self):
         sut = Sentence(
-            "You are conflicted.",
-            self.tagger
+            self.tagger.tag("You are conflicted.")
         )
         apply_yodish_grammar(sut)
         self.assertEqual(
@@ -36,8 +35,7 @@ class E2eTestCase(unittest.TestCase):
 
     def test_uppercase_i(self):
         sut = Sentence(
-            "ii i i",
-            self.tagger
+            self.tagger.tag("ii i i")
         )
         apply_yodish_grammar(sut)
         self.assertEqual(
@@ -47,19 +45,17 @@ class E2eTestCase(unittest.TestCase):
 
     def test_much_anger(self):
         sut = Sentence(
-            "I sense much anger in him.",
-            self.tagger
+            self.tagger.tag("I sense much anger in him.")
         )
         apply_yodish_grammar(sut)
         self.assertEqual(
             "Much anger in him, I sense.",
-            sut.render()
+            sut.render() 
         )
 
     def test_away_put_weapons(self):
         sut = Sentence(
-            "Put your weapons away.",
-            self.tagger
+            self.tagger.tag("Put your weapons away.")
         )
         apply_yodish_grammar(sut)
         self.assertEqual(
@@ -67,3 +63,17 @@ class E2eTestCase(unittest.TestCase):
             sut.render()
         )
 
+    def test_multiple_sentences(self):
+        source = "You are conflicted. Put your weapons away."
+        sentences = self.tagger.tag(source).split('\n')
+        actual = ""
+        expected = "Conflicted, you are. Away put your weapons."
+        for pos_tagged in sentences:
+            s = Sentence(pos_tagged)
+            apply_yodish_grammar(s)
+            actual += s.render() + ' '
+        actual = actual.strip()
+        self.assertEqual(
+            expected,
+            actual
+        )

@@ -9,7 +9,7 @@ class PartOfSpeechTagger(object):
         self.url = url
         self.field_name = field_name
 
-    def fetch_pos(self, source):
+    def tag(self, source):
         try:
             response = urlfetch.fetch(
                 self.url,
@@ -22,4 +22,5 @@ class PartOfSpeechTagger(object):
 
         if response.status_code == 200:
             return json.loads(response.content)['text']
+
 
