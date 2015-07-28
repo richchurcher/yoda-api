@@ -25,7 +25,7 @@ I'd prefer it if you didn't spam requests... the external part of speech tagger 
 
 ## It's not easy, being green
 
-I wouldn't even say I'm that much of a Star Wars junkie, but as it turns out, talking like Yoda is quite an interesting natural language processing task. Mostly because he's inconsistent! It's hard to apply rules that *always* apply. Here's a sample of his dialogue from The Empire Strikes Back "Dagobah System" scenes:
+I wouldn't even say I'm that much of a Star Wars junkie, but as it turns out, talking like Yoda is quite an interesting natural language processing task. Mostly because he's inconsistent! It's hard to find rules that *always* apply. Here's a sample of his dialogue from The Empire Strikes Back "Dagobah System" scenes:
 
     Away put your weapon. I mean you no harm. I am wondering: why are you here?
 
