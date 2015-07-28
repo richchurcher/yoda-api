@@ -34,7 +34,7 @@ class Sentence(object):
         self.words[0].text = w[:1].lower() + w[1:]
         
     def random_yodaisms(self):
-        if random.random() < 0.3:
+        if random.random() < 0.2:
             return " Yes."
         return ""
 
@@ -48,5 +48,4 @@ class Sentence(object):
         s = re.sub(r'\s+(\W)', r'\1', s)
 
         # random_yodaisms breaks tests
-        #return s + self.random_yodaisms()
-        return s.strip() + '.'
+        return s.strip() + '.' + self.random_yodaisms()

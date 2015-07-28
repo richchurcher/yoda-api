@@ -77,3 +77,28 @@ class E2eTestCase(unittest.TestCase):
             expected,
             actual
         )
+
+    def test_my_home_this_is(self):
+        sut = Sentence(
+            self.tagger.tag("This is my home.")
+        )
+        apply_yodish_grammar(sut)
+        self.assertEqual(
+            "My home this is.",
+            sut.render()
+        )
+
+    def test_long_input(self):
+        source = "One two three. Four five six seven eight nine. Ten eleven twelve thirteen. Fourteen fifteen sixteen seventeen eighteen nineteen twenty"
+        sentences = self.tagger.tag(source).replace('\n','').split(')(')
+        actual = ""
+        expected = "One two three. Four five six seven eight nine. Ten eleven twelve thirteen. Fourteen fifteen sixteen seventeen eighteen nineteen twenty."
+        for pos_tagged in sentences:
+            s = Sentence(pos_tagged)
+            apply_yodish_grammar(s)
+            actual += s.render() + ' '
+        actual = actual.strip()
+        self.assertEqual(
+            expected,
+            actual
+        )
