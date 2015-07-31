@@ -22,7 +22,6 @@ class PartOfSpeechTagger(object):
             return "Timed out, your request has. Mmmmmm. Try again later, you must."
 
         if response.status_code == 200:
-            logging.warning(response.content)
             return json.loads(response.content)['text']
 
 
