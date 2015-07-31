@@ -107,8 +107,9 @@ class E2eTestCase(unittest.TestCase):
         sut = Sentence(
             self.tagger.tag("Size does not matter.")
         )
-        apply_yodish_grammer(sut)
+        logging.warning(sut.pos_tagged)
+        apply_yodish_grammar(sut)
         self.assertEqual(
             "Size matters not.",
-            sut.renter()
+            sut.render()
         )
