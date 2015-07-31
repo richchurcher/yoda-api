@@ -48,4 +48,4 @@ class Sentence(object):
         s = re.sub(r'\s+(\W)', r'\1', s)
 
         # random_yodaisms breaks tests
-        return s.strip() + '.' + self.random_yodaisms()
+        return s.strip() + '.' #+ self.random_yodaisms()
