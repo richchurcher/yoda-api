@@ -59,6 +59,24 @@ def index_tag_seq(words, seq, strict=False):
     return -1
 
 
+def mutate_tag_seq(words, seq1, seq2):
+    """ Move/change words matching tag sequence 1 to match sequence 2.
+    May not handle duplicates. """
+    if len(seq1) > len(words):
+        return None
+    seq_start = index_tag_seq(words, seq1)
+    if seq_start > -1:
+        pre = words[:seq_start]
+        post = words[seq_start+len(seq1):]
+        mutated = []
+        for x in seq2:
+            for j in range(len(seq1)): 
+                if x == words[seq_start+j].tag:
+                    mutated.append(words[seq_start+j])
+        return pre + mutated + post
+    return None
+
+
 def rule_prp_vbp(words):
     """ You are conflicted. -> Conflicted, you are. """
     return move_tag_seq(words, ['PRP', 'VBP'], 'end', Word(',',','))
@@ -88,5 +106,8 @@ def rule_dt_vbz(words):
     return move_tag_seq(words, ['DT', 'VBZ'], 'end')
 
 def rule_nnp_vbz_rb_vb(words):
-    if index_tag_seq(words, ['NNP', 'VBZ', 'RB', 'VB']) > -1:
-       pass 
+    return mutate_tag_seq(
+        words,
+        ['NNP','VBZ','RB','VB'],
+        ['NNP','VB','RB']
+    )

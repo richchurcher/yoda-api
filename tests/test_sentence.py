@@ -32,6 +32,14 @@ class SentenceTestCase(unittest.TestCase):
         )
         self.assertEqual(['VBN','PRP','VBP'], get_tag_seq(self.sut.words))
 
+    def test_mutate_tag_seq(self):
+        self.sut.words = mutate_tag_seq(
+            self.sut.words,
+            ['PRP','VBP','VBN'],
+            ['VBP','VBN']
+        )
+        self.assertEqual(['VBP','VBN'], get_tag_seq(self.sut.words))
+
     def test_plurals(self):
         self.sut.add_end(Word('weapons', 'NNS'))
         self.sut.words = move_tag_seq(
