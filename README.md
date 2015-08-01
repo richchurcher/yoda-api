@@ -77,6 +77,10 @@ There's a great deal of room for improvement. Only a few rules are currently imp
 
     Put away your weapons -> Away put your weapons.
 
+    Are you so certain? -> So certain are you?
+
+    Size does not matter. -> Size matters not.
+
 Anything complex will almost certainly break. Multiple simple sentences work though.
 
 
