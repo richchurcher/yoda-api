@@ -22,13 +22,21 @@ class Sentence(object):
         if result is not None:
             self.words = result
 
+    def parse_token(self, token):
+        return token.strip('()').split('/')
+
     def tokenise(self):
         words = self.pos_tagged.split()
-
-        for i in range(1, len(words)):
-            word, tag = words[i].split('/')
+        cat = None
+        i = 1
+        while i < len(words):
+            if words[i] == '(GPE':
+                i += 1
+                cat = 'GPE'
+            word, tag = self.parse_token(words[i])
             if word != '.':
-                self.words.append(Word(word, tag))
+                self.words.append(Word(word, tag, cat))
+            i += 1
 
         w = self.words[0].text
         self.words[0].text = w[:1].lower() + w[1:]
@@ -48,4 +56,4 @@ class Sentence(object):
         s = re.sub(r'\s+(\W)', r'\1', s)
 
         # random_yodaisms breaks tests
-        return s.strip() + '.' + self.random_yodaisms()
+        return s.strip() + '.' #+ self.random_yodaisms()
