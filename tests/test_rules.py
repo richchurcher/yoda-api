@@ -112,3 +112,13 @@ class E2eTestCase(unittest.TestCase):
             "Size matters not.",
             sut.render()
         )
+
+    def test_so_certain_are_you(self):
+        sut = Sentence(
+            self.tagger.tag("Are you so certain?")
+        )
+        apply_yodish_grammar(sut)
+        self.assertEqual(
+            "So certain are you?",
+            sut.render()
+        )
