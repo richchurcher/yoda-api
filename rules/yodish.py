@@ -8,6 +8,7 @@ def apply_yodish_grammar(sentence):
     sentence.apply_rule(rule_vb_prp_nn)
     sentence.apply_rule(rule_dt_vbz)
     sentence.apply_rule(rule_nnp_vbz_rb_vb)
+    sentence.apply_rule(rule_nnp_prp_rb_jj)
 
 
 def get_tag_seq(words):
@@ -122,3 +123,10 @@ def rule_nnp_vbz_rb_vb(words):
             words[i+1].text += 's'
             words[i+1].tag = 'VBZ'
     return words
+
+def rule_nnp_prp_rb_jj(words):
+    return mutate_tag_seq(
+        words,
+        ['NNP','PRP','RB','JJ'],
+        ['RB','JJ','NNP','PRP']
+    )
