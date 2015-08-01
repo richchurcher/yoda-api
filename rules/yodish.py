@@ -101,13 +101,24 @@ def rule_vb_prp_nn(words):
         return move_tag_seq(words, ['VB', 'PRP$', 'NNS'], 'end')
     return None
 
+
 def rule_dt_vbz(words):
     """ This is my home. -> My home this is. """
     return move_tag_seq(words, ['DT', 'VBZ'], 'end')
 
+
 def rule_nnp_vbz_rb_vb(words):
-    return mutate_tag_seq(
+    """ Size does not matter. -> Size matters not. 
+    Conversion of VB to VBZ is blunt at best (adding 's'). """
+    original_len = len(words)
+    words = mutate_tag_seq(
         words,
         ['NNP','VBZ','RB','VB'],
         ['NNP','VB','RB']
     )
+    if words is not None:
+        if len(words) < original_len:
+            i = index_tag_seq(words, ['NNP', 'VB', 'RB'])
+            words[i+1].text += 's'
+            words[i+1].tag = 'VBZ'
+    return words
